@@ -5,6 +5,14 @@ class Board:
         self.size = size
         self.side = size * size
         self.board = np.full((self.side, self.side), 0, dtype="int")
+    
+    def load_csv(self, filename):
+        with open(filename, "r") as file:
+            rows = file.readlines()
+            for i, row in enumerate(rows):
+                nums = row.rstrip().split(',')
+                for j, num in enumerate(nums):
+                    self.board[i,j] = int(num)
             
     def validate_row(self, m):
         for i in range(self.side):
@@ -83,10 +91,6 @@ class Board:
 
 
 if __name__ == "__main__":
-    test_board = Board(5)
+    test_board = Board(2)
+    test_board.load_csv("4x4_valid.csv")
     test_board.print()
-    if test_board.validate():
-        print("Valid board generated")
-    else:
-        print("Invalid board generated")
-    test_board.gen_mc()

@@ -68,41 +68,34 @@ class Board:
 
 
     def validate_row(self, m):
-        for i in range(self.side):
-            if not i in self.board[m, :]:
-                return (False, i)
-        return (True, None)
+        for i in range(1, self.side + 1):
+            if self.counts_rows[m, i] != 1:
+                return False
+        return True
     
 
     def validate_column(self, n):
-        for i in range(self.side):
-            if not i in self.board[:, n]:
-                return (False, i)
-        return (True, None)
+        for i in range(1, self.side + 1):
+            if self.counts_columns[n, i] != 1:
+                return False
+        return True
 
 
     def validate_square(self, s):
-        row_offset = (s // self.size) * self.size
-        col_offset = (s % self.size) * self.size
-        square = np.empty(0, dtype="int")
-
-        for i in range(self.size):
-            sub_row = self.board[row_offset + i, col_offset : col_offset + self.size]
-            square = np.append(square, sub_row)
-
-        for i in range(self.side):
-            if not i in square:
-                return (False, i)
-        return (True, None)
+        for i in range(1, self.side + 1):
+            if self.counts_squares[s, i] != 1:
+                return False
+        return True
     
 
     def validate(self):
         # Check rows
         for m in range(self.side):
-            continue
+            if not self.validate_row(m):
+                return False
         # Check columns
         for n in range(self.side):
-            if not self.validate_column(m):
+            if not self.validate_column(n):
                 return False
         # Check squares
         for s in range(self.size):

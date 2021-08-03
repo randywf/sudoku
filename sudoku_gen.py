@@ -22,14 +22,20 @@ class Board:
                 
     
     def get_square(self, s):
+        """
+        get_square is necessary because Numpy can't return a view of multiple
+        slices of an array. This way, the squares are recaculated when they
+        need to be.
+        """
+        # row_offset and col_offset give the upper left tile of the square.
         row_offset = (s // self.size) * self.size
         col_offset = (s % self.size) * self.size
         square = np.empty(0, dtype="int")
-
+        # Create sub rows for each row in the square, then combine together
         for i in range(self.size):
-            sub_row = self.board[row_offset + i, col_offset : col_offset + self.size]
+            sub_row = self.board[row_offset + i,
+                                 col_offset : col_offset + self.size]
             square = np.append(square, sub_row)
-
         return square
 
 
@@ -37,10 +43,8 @@ class Board:
         # If same value, return
         if (v == self.board[m, n]):
             return
-
+        # Find what square this tile belongs to
         s = (n // self.size) + (m // self.size * self.size)
-        
-
         # Update counts
         # Changing a value, decrement count of previous value
         if (self.board[m, n] != 0):
@@ -48,11 +52,10 @@ class Board:
             self.counts_columns[n, self.board[m, n]] -= 1
             self.counts_squares[s, self.board[m, n]] -= 1
         # Increment count of new value
-        
         self.counts_rows[m, v] += 1
         self.counts_columns[n, v] += 1
         self.counts_squares[s, v] += 1
-
+        # Update board
         self.board[m, n] = v
         self.squares[s] = self.get_square(s)
 

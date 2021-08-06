@@ -40,6 +40,12 @@ class Board:
 
 
     def set_value(self, m, n, v):
+        """
+        Sets a value on the sudoku board at the m'th row, n'th column, with a
+        value of v. This method updates attributes that keep count of the
+        number of any value (i.e. how many 9s?) in rows, columns and squares.
+        Use this instead of trying to directly set values in the matrix.
+        """
         # If same value, return
         if (v == self.board[m, n]):
             return
@@ -61,6 +67,9 @@ class Board:
 
 
     def load_csv(self, filename):
+        """
+        Loads a board from a CSV file.
+        """
         # Read data from file
         with open(filename, "r") as file:
             rows = file.readlines()
@@ -71,6 +80,9 @@ class Board:
 
 
     def validate_row(self, m):
+        """
+        Checks that a row m has one count of each value.
+        """
         for i in range(1, self.side + 1):
             if self.counts_rows[m, i] != 1:
                 return False
@@ -78,6 +90,9 @@ class Board:
     
 
     def validate_column(self, n):
+        """
+        Checks that a column n has one count of each value.
+        """
         for i in range(1, self.side + 1):
             if self.counts_columns[n, i] != 1:
                 return False
@@ -85,6 +100,9 @@ class Board:
 
 
     def validate_square(self, s):
+        """
+        Checks that a square s has one count of each value.
+        """
         for i in range(1, self.side + 1):
             if self.counts_squares[s, i] != 1:
                 return False
@@ -92,6 +110,10 @@ class Board:
     
 
     def validate(self):
+        """
+        Validates every row, column, and square on the board, using validation
+        methods.
+        """
         # Check rows
         for m in range(self.side):
             if not self.validate_row(m):
@@ -111,11 +133,12 @@ class Board:
     def gen_mc(self):
         random_indices = np.random.randint((1,1), self.side)
         random_number = np.random.randint(self.side) + 1
-        self.board[random_indices[0], random_indices[1]] = random_number
-
+        
 
     def print(self):
-        
+        """
+        Prints the current state of the board to STDOUT.
+        """
         for m in range(self.side):
             if m % self.size == 0:
                 h = "="

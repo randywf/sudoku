@@ -128,11 +128,6 @@ class Board:
                 return False
         # Passed all checks
         return True
-
-
-    def gen_mc(self):
-        random_indices = np.random.randint((1,1), self.side)
-        random_number = np.random.randint(self.side) + 1
         
 
     def print(self):

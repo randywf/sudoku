@@ -141,28 +141,3 @@ class Board:
         for n in range(self.side):
             print(h * 4, end="")
         print(h)
-
-
-
-if __name__ == "__main__":
-    test_board = Board(2)
-    test_board.load_csv("4x4_valid.csv")
-
-    test_board.print()
-    print(test_board.rows[0])
-    print(test_board.columns[0])
-    print(test_board.squares[0])
-    print(test_board.counts_rows)
-    print(test_board.counts_columns)
-    print(test_board.counts_squares)
-    print(test_board.validate())
-
-    test_board.set_value(0,0,1)
-    test_board.print()
-    print(test_board.rows[0])
-    print(test_board.columns[0])
-    print(test_board.squares[0])
-    print(test_board.counts_rows)
-    print(test_board.counts_columns)
-    print(test_board.counts_squares)
-    print(test_board.validate())

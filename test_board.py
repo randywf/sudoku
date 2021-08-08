@@ -1,5 +1,5 @@
 import unittest
-import sudoku
+import board
 import numpy as np
 
 unittest.TestLoader.sortTestMethodsUsing = None

@@ -1,5 +1,5 @@
 import numpy as np
-from sudoku import Board
+from board import Board
 
 
 

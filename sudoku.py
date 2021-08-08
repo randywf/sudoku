@@ -150,7 +150,7 @@ class Board:
                 else:
                     v = "│"
                 
-                if (np.isnan(self.board[m,n])):
+                if (self.board[m,n] == 0):
                     print(f"{v}   ", end="")
                 else:
                     print(f"{v} {self.board[m,n]} ", end="")

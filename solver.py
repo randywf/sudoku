@@ -49,7 +49,7 @@ class Solver(Board):
         cell = self.next_available_cell()
 
         if cell == (-1,-1):
-            # Make final assignment
+            # Make assignment
             for c in self.counts_rows.items():
                 if c[1] == 0:
                     m = c[0][0]
@@ -58,7 +58,6 @@ class Solver(Board):
                 if c[1] == 0:
                     n = c[0][0]
             self.set_value(m, n, v)
-
             return True
         
         for i in range(1, self.side + 1):
@@ -76,6 +75,7 @@ class Solver(Board):
         # Backtrack up the search tree
         return False
     
+
     def swap_numbers(self):
         shuffled_numbers = np.arange(1, self.side + 1)
         np.random.shuffle(shuffled_numbers)

@@ -9,7 +9,7 @@ class Board:
         # Dictionaries to access values
         self.rows = {m: self.board[m, :] for m in range(self.side)}
         self.columns = {n : self.board[:, n] for n in range(self.side)}
-        self.squares = {s: self.get_square(s) for s in range(self.side)}
+        self.squares = {s: self.get_square_values(s) for s in range(self.side)}
         # Dictionaries to store counts of values
         self.counts_rows = {}
         self.counts_columns = {}
@@ -20,10 +20,12 @@ class Board:
                 self.counts_columns[(i, j + 1)] = 0
                 self.counts_squares[(i, j + 1)] = 0
                 
-    
-    def get_square(self, s):
+    def get_square(self, m, n):
+        return (n // self.size) + (m // self.size * self.size)
+
+    def get_square_values(self, s):
         """
-        get_square is necessary because Numpy can't return a view of multiple
+        get_square_values is necessary because Numpy can't return a view of multiple
         slices of an array. This way, the squares are recaculated when they
         need to be.
         """
@@ -46,11 +48,12 @@ class Board:
         number of any value (i.e. how many 9s?) in rows, columns and squares.
         Use this instead of trying to directly set values in the matrix.
         """
+        #print(f"  Setting cell {m},{n} to {v}")
         # If same value, return
         if (v == self.board[m, n]):
             return
         # Find what square this tile belongs to
-        s = (n // self.size) + (m // self.size * self.size)
+        s = self.get_square(m, n)
         # Update counts
         # Changing a value, decrement count of previous value
         if (self.board[m, n] != 0):
@@ -63,8 +66,19 @@ class Board:
         self.counts_squares[s, v] += 1
         # Update board
         self.board[m, n] = v
-        self.squares[s] = self.get_square(s)
+        self.squares[s] = self.get_square_values(s)
 
+    def reset_value(self, m, n):
+        #print(f"Resetting cell {m},{n}")
+        s = self.get_square(m, n)
+        v = self.board[m, n]
+        # Update counts
+        self.counts_rows[m, v] -= 1
+        self.counts_columns[n, v] -= 1
+        self.counts_squares[s, v] -= 1
+        # Update board
+        self.board[m, n] = 0
+        self.squares[s] = self.get_square_values(s)
 
     def load_csv(self, filename):
         """

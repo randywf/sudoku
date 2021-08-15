@@ -7,7 +7,7 @@ unittest.TestLoader.sortTestMethodsUsing = None
 
 
 class SudokuTest(unittest.TestCase):
-    test_board = sudoku.Board(3)
+    test_board = board.Board(3)
 
 
     def testCheckSetValue(self):

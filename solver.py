@@ -50,9 +50,6 @@ class Solver(Board):
 
         if cell == (-1,-1):
             # Make final assignment
-            m = -1
-            n = -1
-            v = -1
             for c in self.counts_rows.items():
                 if c[1] == 0:
                     m = c[0][0]
@@ -78,6 +75,14 @@ class Solver(Board):
         
         # Backtrack up the search tree
         return False
+    
+    def swap_numbers(self):
+        shuffled_numbers = np.arange(1, self.side + 1)
+        np.random.shuffle(shuffled_numbers)
+        for m in range(self.side):
+            for n in range(self.side):
+                new_value = shuffled_numbers[self.board[m, n] - 1]
+                self.board[m, n] = new_value
 
 
 if __name__ == '__main__':
@@ -90,14 +95,6 @@ if __name__ == '__main__':
     else:
         print("Invalid solution")
 
-    """print("Row counts")
-    print(t.counts_rows)
-    print()
-
-    print("Column counts")
-    print(t.counts_columns)
-    print()
-
-    print("Square counts")
-    print(t.counts_squares)
-    print()"""
+    t.swap_numbers()
+    t.print()
+    print("Numbers have been swapped")

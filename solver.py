@@ -98,3 +98,9 @@ if __name__ == '__main__':
     t.swap_numbers()
     t.print()
     print("Numbers have been swapped")
+
+    t.recount_values()
+    if t.validate():
+        print("Solution is still valid after recount")
+    else:
+        print("Error")

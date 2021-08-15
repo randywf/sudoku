@@ -142,6 +142,21 @@ class Board:
                 return False
         # Passed all checks
         return True
+    
+
+    def recount_values(self):
+        for x in range(self.side):
+            for i in range(1, self.side + 1):
+                self.counts_rows[x, i] = 0
+                self.counts_columns[x, i] = 0
+                self.counts_squares[x, i] = 0
+        for m in range(self.side):
+            for n in range(self.side):
+                s = self.get_square(m, n)
+                v = self.board[m, n]
+                self.counts_rows[m, v] += 1
+                self.counts_columns[n, v] += 1
+                self.counts_squares[s, v] += 1
         
 
     def print(self):

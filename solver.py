@@ -23,13 +23,8 @@ class Solver(Board):
         for i in range(9):
             self.set_value(row_ind[i], col_ind[i], i)
             self.available_cells.pop((row_ind[i], col_ind[i]))
-
-    def random_available_cell(self):
-        if len(self.available_cells) == 0:
-            return (-1,-1)
-        else:
-            return random.choice(list(self.available_cells.keys()))
     
+
     def next_available_cell(self):
         if len(self.available_cells) == 0:
             return (-1,-1)
@@ -38,6 +33,7 @@ class Solver(Board):
             cells.sort(key=lambda y: y[0])
             return cells[0]
     
+
     def is_value_allowed(self, m, n, v):
         s = self.get_square(m, n)
         if self.counts_rows[m, v] != 0:
@@ -48,6 +44,7 @@ class Solver(Board):
             return False
         return True
     
+
     def solve(self):
         cell = self.next_available_cell()
 

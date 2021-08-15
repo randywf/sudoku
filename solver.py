@@ -49,6 +49,19 @@ class Solver(Board):
         cell = self.next_available_cell()
 
         if cell == (-1,-1):
+            # Make final assignment
+            m = -1
+            n = -1
+            v = -1
+            for c in self.counts_rows.items():
+                if c[1] == 0:
+                    m = c[0][0]
+                    v = c[0][1]
+            for c in self.counts_columns.items():
+                if c[1] == 0:
+                    n = c[0][0]
+            self.set_value(m, n, v)
+
             return True
         
         for i in range(1, self.side + 1):
@@ -72,8 +85,12 @@ if __name__ == '__main__':
     t.print()
     t.solve()
     t.print()
+    if t.validate():
+        print("Valid solution generated")
+    else:
+        print("Invalid solution")
 
-    print("Row counts")
+    """print("Row counts")
     print(t.counts_rows)
     print()
 
@@ -83,4 +100,4 @@ if __name__ == '__main__':
 
     print("Square counts")
     print(t.counts_squares)
-    print()
+    print()"""

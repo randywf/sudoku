@@ -1,13 +1,106 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(255, 255, 255);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.cellTopLeft {
+  margin: 0px;
+  padding: 0px;
+  height: 32px;
+  width: 32px;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+}
+
+.cellTopCenter {
+  margin: 0px;
+  padding: 0px;
+  height: 32px;
+  width: 32px;
+  border-top: 1px solid black;
+}
+
+.cellTopRight {
+  margin: 0px;
+  padding: 0px;
+  height: 32px;
+  width: 32px;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.cellCenterLeft {
+  margin: 0px;
+  padding: 0px;
+  height: 32px;
+  width: 32px;
+  border-left: 1px solid black;
+}
+
+.cellCenter {
+  margin: 0px;
+  padding: 0px;
+  height: 32px;
+  width: 32px;
+}
+
+.cellCenterRight {
+  margin: 0px;
+  padding: 0px;
+  height: 32px;
+  width: 32px;
+  border-right: 1px solid black;
+}
+
+.cellBottomLeft {
+  margin: 0px;
+  padding: 0px;
+  height: 32px;
+  width: 32px;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+
+.cellBottomCenter {
+  margin: 0px;
+  padding: 0px;
+  height: 32px;
+  width: 32px;
+  border-bottom: 1px solid black;
+}
+
+.cellBottomRight {
+  margin: 0px;
+  padding: 0px;
+  height: 32px;
+  width: 32px;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.cellContent {
+  margin: 0px;
+  padding: 0px;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+}
+
+.grid {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* Remove arrows from number input field */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

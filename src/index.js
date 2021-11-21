@@ -88,7 +88,7 @@ class Grid extends React.Component {
   render() {
     return (
       <div className='grid'>
-        <table className='grid'>
+        <table className='gridTable'>
           <tbody>
             {this.state.rows}
           </tbody>
@@ -99,11 +99,7 @@ class Grid extends React.Component {
 }
 
 
-function NewGame() {
-  return('');
-}
-
-class UploadGrid extends React.Component {
+class FileControls extends React.Component {
   state = {
     selectedFile: null
   };
@@ -118,7 +114,7 @@ class UploadGrid extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="fileControls">
         <input type="file" name="file" onChange={this.onFileSelect} />
         <div>
           <button onClick={this.onFileSubmit}>Upload</button>
@@ -152,7 +148,7 @@ class GameControls extends React.Component {
 
   render() {
     return (
-      <div className="gameControls" align="center">
+      <div className="gameControls">
         <table>
           <tbody>
             <tr>
@@ -176,6 +172,7 @@ class GameControls extends React.Component {
   }
 }
 
+
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -190,7 +187,7 @@ class Game extends React.Component {
       <div>
         <Grid />
         <GameControls />
-        <UploadGrid />
+        <FileControls />
       </div>
     );
   }

@@ -131,18 +131,22 @@ class UploadGrid extends React.Component {
 
 class GameControls extends React.Component {
   onGameNew() {
+    // Request a new grid from the backend server
     console.log("New game");
   }
 
   onGameCheck() {
+    // Check grid to see if sudoku is solved
     console.log("Check game");
   }
 
   onGameHint() {
+    // Give a random hint (suggestion for filling a square)
     console.log("Hint");
   }
 
   onGameSubmit() {
+    // Submit game to backend server for scoring and validation
     console.log("Submit Game")
   }
 
@@ -170,13 +174,6 @@ class GameControls extends React.Component {
       </div>
     )
   }
-}
-
-
-function SubmitGrid() {
-  return (
-    <button>Submit</button>
-  )
 }
 
 class Game extends React.Component {

@@ -121,11 +121,62 @@ class UploadGrid extends React.Component {
       <div>
         <input type="file" name="file" onChange={this.onFileSelect} />
         <div>
-          <button onClick={this.onFileSubmit}>Submit</button>
+          <button onClick={this.onFileSubmit}>Upload</button>
         </div>
       </div>
     );
   }
+}
+
+
+class GameControls extends React.Component {
+  onGameNew() {
+    console.log("New game");
+  }
+
+  onGameCheck() {
+    console.log("Check game");
+  }
+
+  onGameHint() {
+    console.log("Hint");
+  }
+
+  onGameSubmit() {
+    console.log("Submit Game")
+  }
+
+  render() {
+    return (
+      <div className="gameControls" align="center">
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <button onClick={this.onGameNew}>New Game</button>
+              </td>
+              <td>
+                <button onClick={this.onGameCheck}>Check</button>
+              </td>
+              <td>
+                <button onClick={this.onGameHint}>Hint</button>
+              </td>
+              <td>
+                <button onClick={this.onGameSubmit}>Submit</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+}
+
+
+function SubmitGrid() {
+  return (
+    <button>Submit</button>
+  )
 }
 
 class Game extends React.Component {
@@ -141,6 +192,7 @@ class Game extends React.Component {
     return (
       <div>
         <Grid />
+        <GameControls />
         <UploadGrid />
       </div>
     );

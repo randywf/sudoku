@@ -103,15 +103,29 @@ function NewGame() {
   return('');
 }
 
-function UploadGrid() {
-  return (
-    <div>
-      <input type="file" name="file" onChange={changeHandler} />
+class UploadGrid extends React.Component {
+  state = {
+    selectedFile: null
+  };
+
+  onFileSelect = event => {
+    this.setState({ selectedFile: event.target.files[0] });
+  }
+
+  onFileSubmit = () => {
+    console.log("Uploading: " + this.state.selectedFile);
+  }
+
+  render() {
+    return (
       <div>
-        <button onClick={handleSubmission}>Submit</button>
+        <input type="file" name="file" onChange={this.onFileSelect} />
+        <div>
+          <button onClick={this.onFileSubmit}>Submit</button>
+        </div>
       </div>
-    </div>
-  )
+    );
+  }
 }
 
 class Game extends React.Component {
@@ -127,8 +141,7 @@ class Game extends React.Component {
     return (
       <div>
         <Grid />
-        <button onClick={() => this.newGame()}>New Game{() => this.newGame()}</button>
-        UploadGrid()
+        <UploadGrid />
       </div>
     );
   }

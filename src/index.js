@@ -7,7 +7,7 @@ class Cell extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      value: this.props.value
     };
     // Controlled component
     this.onKeyDown = this.onKeyDown.bind(this);
@@ -46,10 +46,11 @@ class Cell extends React.Component {
         <td className={this.props.className}>
           <form onSubmit={this.handleSubmit}>
             <input 
+              id={this.props.id}
               className='cellContent'
               type='text' 
-              value={this.state.value} 
-              onChange={this.handleChange} 
+              //value={this.props.value}
+              onChange={this.props.onChangeCellValue} 
               onKeyDown={this.onKeyDown}
             />
           </form>
@@ -62,7 +63,7 @@ class Cell extends React.Component {
 
 class Grid extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       rows: []
     };
@@ -72,17 +73,26 @@ class Grid extends React.Component {
       2:['cellBottomLeft','cellBottomCenter','cellBottomRight']
     };
     for (let row = 0; row < 9; row++) {
-      let cells = []
+      let cells = [];
       for (let col = 0; col < 9; col++) {
         let cellID = row * 9 + col
         cells.push(<Cell 
           key={cellID} 
           id={cellID} 
           className={classNameMap[row % 3][col % 3]}
+          //value={this.props.cellValues[row][col]}
+          value={this.getCellValue}
+          onChangeCellValue={this.props.onChangeCellValue}
         />);
       }
-      this.state.rows.push(<tr key={row}>{cells}</tr>)
+      this.state.rows.push(<tr key={row}>{cells}</tr>);
     }
+  }
+
+  getCellValue(n) {
+    let row = Math.floor(n / 9);
+    let col = n % 9;
+    return this.props.cellValues[row][col];
   }
 
   render() {
@@ -137,7 +147,7 @@ class GameControls extends React.Component {
   }
 
   onGameHint() {
-    // Give a random hint (suggestion for filling a square)
+    // Give a random suggestion for filling a square
     console.log("Hint");
   }
 
@@ -176,16 +186,40 @@ class GameControls extends React.Component {
 class Game extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      cellValues: [
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0]
+      ]
+    };
+
+    this.onChangeCellValue = this.onChangeCellValue.bind(this);
   }
 
-  newGame() {
-    return "";
+  onChangeCellValue(event) {
+    let row = Math.floor(event.target.id / 9);
+    let col = event.target.id % 9;
+    let new_value = event.target.value.substr(-1)
+    if (/^[1-9]/.test(new_value)) {
+      //this.setState({value: new_value});
+      console.log("%s entered at row %d, col %d", new_value, row, col);
+    }
   }
 
   render() {
     return (
       <div>
-        <Grid />
+        <Grid
+          cellValues={this.state.cellValues} 
+          onChangeCellValue={(e) => this.onChangeCellValue(e)}
+        />
         <GameControls />
         <FileControls />
       </div>

@@ -89,11 +89,6 @@ class Grid extends React.Component {
     }
   }
 
-  getCellValue(n) {
-    let row = Math.floor(n / 9);
-    let col = n % 9;
-    return this.props.cellValues[row][col];
-  }
 
   render() {
     return (
@@ -182,34 +177,34 @@ class GameControls extends React.Component {
   }
 }
 
+// Initialize an empty sudoku grid as a 2d array
+const initialGridState = new Array(9).fill(0).map(() => new Array(9).fill(0))
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cellValues: [
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0]
-      ]
+      gridState: initialGridState
     };
-
     this.onChangeCellValue = this.onChangeCellValue.bind(this);
   }
-
+  
   onChangeCellValue(event) {
     let row = Math.floor(event.target.id / 9);
     let col = event.target.id % 9;
     let new_value = event.target.value.substr(-1)
     if (/^[1-9]/.test(new_value)) {
-      //this.setState({value: new_value});
-      console.log("%s entered at row %d, col %d", new_value, row, col);
+      this.setState({
+       gridState: this.state.gridState.map((rowElement, rowIndex) => {
+         return rowElement.map((columnElement, columnIndex) => {
+            if (rowIndex === row && columnIndex === col) {
+              return Number(new_value);
+            } else {
+              return columnElement;
+            }
+         });
+       })
+      });
     }
   }
 
@@ -217,7 +212,7 @@ class Game extends React.Component {
     return (
       <div>
         <Grid
-          cellValues={this.state.cellValues} 
+          gridState={this.state.gridState} 
           onChangeCellValue={(e) => this.onChangeCellValue(e)}
         />
         <GameControls />

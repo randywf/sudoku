@@ -24,23 +24,14 @@ class Cell extends React.Component {
 
   onKeyDown(event) {
     // Allow backspace
-    if (event.key === "Backspace") {
-      console.log("Cell %s: Backspace pressed", this.props.id);
-      this.props.onChangeCellValue(event)
-    }
-    else if (/^[1-9]/.test(event.key)) {
-      console.log("Cell %s: %s entered", this.props.id, event.key);
-      //this.props.onChangeCellValue(event);
-    }
-    else {
-      console.log("Cell %s: Key press unrecognized (%s)", this.props.id, event.key);
+    if (event.key === "Backspace" || /^[1-9]/.test(event.key)) {
+      this.props.onChangeCellValue(event);
     }
   }
 
   handleChange(event) {
-    // Change value if 1-9 is entered
-    console.log("Cell %s: Change event", this.props.id);
-    this.props.onChangeCellValue(event);
+    // Don't allow user to change text field
+    event.preventDefault();
   }
 
   handleSubmit(event) {
@@ -49,7 +40,6 @@ class Cell extends React.Component {
   }
 
   render() {
-    console.log("Rendering cell %s", this.props.id)
     if (this.props.fixed) {
       return (
         <p className='fixedCellContent'>{this.props.value}</p>
@@ -74,7 +64,6 @@ class Cell extends React.Component {
 
 class Grid extends React.Component {
   renderCell(row, col) {
-    console.log("RenderCell %s, %s", row, col);
     return (
       <td className={classNameMap[row % 3][col % 3]}>
         <Cell 
@@ -87,7 +76,6 @@ class Grid extends React.Component {
   }
 
   render() {
-    console.log("Rendering grid")
     return (
       <div className='grid'>
         <table className='gridTable'>
@@ -299,11 +287,10 @@ class Game extends React.Component {
   onChangeCellValue(event) {
     let row = Math.floor(event.target.id / 9);
     let col = event.target.id % 9;
-    let new_value = event.target.value.substr(-1)
-    if (event.key == "Backspace") {
+    if (event.key === "Backspace") {
       this.changeCellValue(row, col, "");
-    } else if (/^[1-9]/.test(new_value)) {
-      this.changeCellValue(row, col, new_value);
+    } else if (/^[1-9]/.test(event.key)) {
+      this.changeCellValue(row, col, event.key);
     }
   }
 

@@ -3,13 +3,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+// CSS class names for the different cell types in the grid
+const classNameMap = {
+  0:['cellTopLeft','cellTopCenter','cellTopRight'],
+  1:['cellCenterLeft','cellCenter','cellCenterRight'],
+  2:['cellBottomLeft','cellBottomCenter','cellBottomRight']
+};
+
+// Initialize an empty sudoku grid as a 2d array
+const initialGridState = new Array(9).fill("").map(() => new Array(9).fill(""))
+
+
 class Cell extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: this.props.value
-    };
-    // Controlled component
     this.onKeyDown = this.onKeyDown.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,17 +24,23 @@ class Cell extends React.Component {
 
   onKeyDown(event) {
     // Allow backspace
-    if (event.keyCode === 8) {
-      this.setState({value: ''});
+    if (event.key === "Backspace") {
+      console.log("Cell %s: Backspace pressed", this.props.id);
+      this.props.onChangeCellValue(event)
+    }
+    else if (/^[1-9]/.test(event.key)) {
+      console.log("Cell %s: %s entered", this.props.id, event.key);
+      //this.props.onChangeCellValue(event);
+    }
+    else {
+      console.log("Cell %s: Key press unrecognized (%s)", this.props.id, event.key);
     }
   }
 
   handleChange(event) {
     // Change value if 1-9 is entered
-    let new_value = event.target.value.substr(-1)
-    if (/^[1-9]/.test(new_value)) {
-      this.setState({value: new_value});
-    }
+    console.log("Cell %s: Change event", this.props.id);
+    this.props.onChangeCellValue(event);
   }
 
   handleSubmit(event) {
@@ -36,25 +49,23 @@ class Cell extends React.Component {
   }
 
   render() {
+    console.log("Rendering cell %s", this.props.id)
     if (this.props.fixed) {
       return (
-        <td className={this.props.className}>{this.state.value}</td>
+        <p className='fixedCellContent'>{this.props.value}</p>
       );
-    }
-    else {
+    } else {
       return (
-        <td className={this.props.className}>
-          <form onSubmit={this.handleSubmit}>
-            <input 
-              id={this.props.id}
-              className='cellContent'
-              type='text' 
-              //value={this.props.value}
-              onChange={this.props.onChangeCellValue} 
-              onKeyDown={this.onKeyDown}
-            />
-          </form>
-        </td>
+        <form onSubmit={this.handleSubmit}>
+          <input 
+            id={this.props.id}
+            className='cellContent'
+            type='text' 
+            value={this.props.value}
+            onChange={this.handleChange} 
+            onKeyDown={this.onKeyDown}
+          />
+        </form>
       );
     }
   }
@@ -62,44 +73,128 @@ class Cell extends React.Component {
 
 
 class Grid extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      rows: []
-    };
-    let classNameMap = {
-      0:['cellTopLeft','cellTopCenter','cellTopRight'],
-      1:['cellCenterLeft','cellCenter','cellCenterRight'],
-      2:['cellBottomLeft','cellBottomCenter','cellBottomRight']
-    };
-    for (let row = 0; row < 9; row++) {
-      let cells = [];
-      for (let col = 0; col < 9; col++) {
-        let cellID = row * 9 + col
-        cells.push(<Cell 
-          key={cellID} 
-          id={cellID} 
-          className={classNameMap[row % 3][col % 3]}
-          //value={this.props.cellValues[row][col]}
-          value={this.getCellValue}
+  renderCell(row, col) {
+    console.log("RenderCell %s, %s", row, col);
+    return (
+      <td className={classNameMap[row % 3][col % 3]}>
+        <Cell 
+          id={row * 9 + col}
+          value={this.props.gridState[row][col]}
           onChangeCellValue={this.props.onChangeCellValue}
-        />);
-      }
-      this.state.rows.push(<tr key={row}>{cells}</tr>);
-    }
+        />
+      </td>
+    );
   }
 
-
   render() {
+    console.log("Rendering grid")
     return (
       <div className='grid'>
         <table className='gridTable'>
           <tbody>
-            {this.state.rows}
+            <tr>
+              {this.renderCell(0,0)}
+              {this.renderCell(0,1)}
+              {this.renderCell(0,2)}
+              {this.renderCell(0,3)}
+              {this.renderCell(0,4)}
+              {this.renderCell(0,5)}
+              {this.renderCell(0,6)}
+              {this.renderCell(0,7)}
+              {this.renderCell(0,8)}
+            </tr>
+            <tr>
+              {this.renderCell(1,0)}
+              {this.renderCell(1,1)}
+              {this.renderCell(1,2)}
+              {this.renderCell(1,3)}
+              {this.renderCell(1,4)}
+              {this.renderCell(1,5)}
+              {this.renderCell(1,6)}
+              {this.renderCell(1,7)}
+              {this.renderCell(1,8)}
+            </tr>
+            <tr>
+              {this.renderCell(2,0)}
+              {this.renderCell(2,1)}
+              {this.renderCell(2,2)}
+              {this.renderCell(2,3)}
+              {this.renderCell(2,4)}
+              {this.renderCell(2,5)}
+              {this.renderCell(2,6)}
+              {this.renderCell(2,7)}
+              {this.renderCell(2,8)}
+            </tr>
+            <tr>
+              {this.renderCell(3,0)}
+              {this.renderCell(3,1)}
+              {this.renderCell(3,2)}
+              {this.renderCell(3,3)}
+              {this.renderCell(3,4)}
+              {this.renderCell(3,5)}
+              {this.renderCell(3,6)}
+              {this.renderCell(3,7)}
+              {this.renderCell(3,8)}
+            </tr>
+            <tr>
+              {this.renderCell(4,0)}
+              {this.renderCell(4,1)}
+              {this.renderCell(4,2)}
+              {this.renderCell(4,3)}
+              {this.renderCell(4,4)}
+              {this.renderCell(4,5)}
+              {this.renderCell(4,6)}
+              {this.renderCell(4,7)}
+              {this.renderCell(4,8)}
+            </tr>
+            <tr>
+              {this.renderCell(5,0)}
+              {this.renderCell(5,1)}
+              {this.renderCell(5,2)}
+              {this.renderCell(5,3)}
+              {this.renderCell(5,4)}
+              {this.renderCell(5,5)}
+              {this.renderCell(5,6)}
+              {this.renderCell(5,7)}
+              {this.renderCell(5,8)}
+            </tr>
+            <tr>
+              {this.renderCell(6,0)}
+              {this.renderCell(6,1)}
+              {this.renderCell(6,2)}
+              {this.renderCell(6,3)}
+              {this.renderCell(6,4)}
+              {this.renderCell(6,5)}
+              {this.renderCell(6,6)}
+              {this.renderCell(6,7)}
+              {this.renderCell(6,8)}
+            </tr>
+            <tr>
+              {this.renderCell(7,0)}
+              {this.renderCell(7,1)}
+              {this.renderCell(7,2)}
+              {this.renderCell(7,3)}
+              {this.renderCell(7,4)}
+              {this.renderCell(7,5)}
+              {this.renderCell(7,6)}
+              {this.renderCell(7,7)}
+              {this.renderCell(7,8)}
+            </tr>
+            <tr>
+              {this.renderCell(8,0)}
+              {this.renderCell(8,1)}
+              {this.renderCell(8,2)}
+              {this.renderCell(8,3)}
+              {this.renderCell(8,4)}
+              {this.renderCell(8,5)}
+              {this.renderCell(8,6)}
+              {this.renderCell(8,7)}
+              {this.renderCell(8,8)}
+            </tr>
           </tbody>
         </table>
       </div>
-    )
+    );
   }
 }
 
@@ -177,8 +272,6 @@ class GameControls extends React.Component {
   }
 }
 
-// Initialize an empty sudoku grid as a 2d array
-const initialGridState = new Array(9).fill(0).map(() => new Array(9).fill(0))
 
 class Game extends React.Component {
   constructor(props) {
@@ -188,23 +281,29 @@ class Game extends React.Component {
     };
     this.onChangeCellValue = this.onChangeCellValue.bind(this);
   }
+
+  changeCellValue(row, col, val) {
+    this.setState({
+     gridState: this.state.gridState.map((rowElement, rowIndex) => {
+       return rowElement.map((columnElement, columnIndex) => {
+          if (rowIndex === row && columnIndex === col) {
+            return val;
+          } else {
+            return columnElement;
+          }
+        });
+      })
+    });
+  }
   
   onChangeCellValue(event) {
     let row = Math.floor(event.target.id / 9);
     let col = event.target.id % 9;
     let new_value = event.target.value.substr(-1)
-    if (/^[1-9]/.test(new_value)) {
-      this.setState({
-       gridState: this.state.gridState.map((rowElement, rowIndex) => {
-         return rowElement.map((columnElement, columnIndex) => {
-            if (rowIndex === row && columnIndex === col) {
-              return Number(new_value);
-            } else {
-              return columnElement;
-            }
-         });
-       })
-      });
+    if (event.key == "Backspace") {
+      this.changeCellValue(row, col, "");
+    } else if (/^[1-9]/.test(new_value)) {
+      this.changeCellValue(row, col, new_value);
     }
   }
 

@@ -1,9 +1,36 @@
-# Sudoku Web App Front End
+# Sudoku Web App
+A sudoku game for your internet!
 
-## About
-This is a front end user interface using React
+## Table of Contents
+ * [Introduction](#introduction)
+ * [Technologies](#technologies)
+ * [Installation](#installation)
+ * [Future Plans](#future-plans)
+ * [Contribute](#contribute)
 
-## To-Do
+## Introduction
+I started this project to hone my skills in web development and project management. I realize there must be a million sudoku websites out there, but I find the game interesting so I chose to design a web app built around sudoku. My focus is mainly on implementing clean, understandable and efficient code, with an emphasis on readability.
+
+## Technologies
+This project uses:  
+ * Node
+ * React
+
+## Installation
+Install using NPM:
+```
+git clone https://github.com/randywf/sudoku-react.git
+cd sudoku-react
+npm install
+npm start
+```
+
+## Future Plans
+I plan on integrating this front-end app with a backend database, but I'm still learning how to make them communicate. As of now, I'm focusing on finishing up the front end.
+
+## Contribute
+If you've somehow stumbled across this and want to help, feel free to submit a pull request. These are some things I'd like to get done:
+### To-Do List
  - Tests
  - Check for valid solution
  - Load file

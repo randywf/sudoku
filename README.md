@@ -28,8 +28,6 @@ npm start
 ## Future Plans
 I plan on integrating this front-end app with a backend database, but I'm still learning how to make them communicate. As of now, I'm focusing on finishing up the front end.
 
-## Contribute
-If you've somehow stumbled across this and want to help, feel free to submit a pull request. These are some things I'd like to get done:
 ### To-Do List
  - Tests
  - Check for valid solution

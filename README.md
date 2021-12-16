@@ -6,7 +6,6 @@ A sudoku game for your internet!
  * [Technologies](#technologies)
  * [Installation](#installation)
  * [Future Plans](#future-plans)
- * [Contribute](#contribute)
 
 ## Introduction
 I started this project to hone my skills in web development and project management. I realize there must be a million sudoku websites out there, but I find the game interesting so I chose to design a web app built around sudoku. My focus is mainly on implementing clean, understandable and efficient code, with an emphasis on readability.
